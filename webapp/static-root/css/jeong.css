@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/*postList*/
+
+.postDiv{
+	margin: 0 auto;
+    min-width : 300px;
+    max-width : 500px;
+    position : relative;
+	color : #262626;
+	background-color : #fff;
+	font-size : 0.8em;
+}
+
+.formDiv{
+	margin: 0 auto;
+    min-width : 300px;
+    max-width : 500px;
+    position : relative;
+	color : #262626;
+	font-size : 0.8em;
+	text-align : center;
+}
+
+.postBtnDiv {
+	display : inline-block;
+	margin : 0px auto;
+	text-align : center;
+}
+
+.post{
+	color : #262626;
+    margin-top: 40px;
+	border:1px solid #cfcfcf;;
+	border-radius: 0.6%;
+}
+
+.writer{
+    padding : 10px;
+	align : left;
+}
+
+.goToMypage{
+	cursor : pointer;
+	padding : 5px;
+}
+
+.memberImage{
+	width : 30px;
+	height : 30px;
+	border-radius: 100%;
+}
+
+.image{
+	width : 100%;
+	height : 500px;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.social{
+    padding : 10px;
+}
+
+.liked{
+	cursor : pointer;
+}
+
+.find{
+	cursor : pointer;
+	color : #517bca;
+}
+
+#btnMore{
+	cursor : pointer;
+    min-width: 300px;
+	text-align : center;
+	padding : 5px;
+	font-weight: bold;
+	color: #474747;
+}

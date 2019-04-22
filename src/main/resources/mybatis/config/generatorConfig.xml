@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry
+		location="C:\Users\haeny\.m2\repository\com\oracle\ojdbc6\12.1.0.2\ojdbc6-12.1.0.2.jar" />
+
+	<context id="memberContext">
+		<jdbcConnection
+			connectionURL="jdbc:oracle:thin:@218.38.15.94:1521:ORAX2CO"
+			driverClass="oracle.jdbc.driver.OracleDriver" password="newbie#"
+			userId="newbie" />
+		<javaModelGenerator
+			targetPackage="kr.sys4u.spring.instagram.core.dto.member"
+			targetProject="team-b-webapp" />
+		<sqlMapGenerator targetPackage="mybatis.mapper.member"
+			targetProject="team-b-webapp" />
+		<javaClientGenerator
+			targetPackage="kr.sys4u.spring.instagram.core.repository.member"
+			targetProject="team-b-webapp" type="XMLMAPPER" />
+		<table schema="NEWBIE" tableName="MEMBER">
+		</table>
+		<table schema="NEWBIE" tableName="MEMBER_IMAGE">
+		</table>
+	</context>
+	<context id="postContext">
+		<jdbcConnection
+			connectionURL="jdbc:oracle:thin:@218.38.15.94:1521:ORAX2CO"
+			driverClass="oracle.jdbc.driver.OracleDriver" password="newbie#"
+			userId="newbie" />
+		<javaModelGenerator
+			targetPackage="kr.sys4u.spring.instagram.core.dto.post"
+			targetProject="team-b-webapp" />
+		<sqlMapGenerator targetPackage="mybatis.mapper.post"
+			targetProject="team-b-webapp" />
+		<javaClientGenerator
+			targetPackage="kr.sys4u.spring.instagram.core.repository.post"
+			targetProject="team-b-webapp" type="XMLMAPPER" />
+		<table schema="NEWBIE" tableName="POST">
+		</table>
+		<table schema="NEWBIE" tableName="POST_LIKE">
+		</table>
+		<table schema="NEWBIE" tableName="POST_REPLY">
+		</table>
+		<table schema="NEWBIE" tableName="POST_IMAGE">
+		</table>
+		<table schema="NEWBIE" tableName="HASHTAG">
+		</table>
+	</context>
+</generatorConfiguration>

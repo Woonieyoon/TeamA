@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sys4u.spring.instagram.core.repository.member.MemberRepository">
+
+	<resultMap type="memberImage" id="memberImageMap">
+			<result property="memberNo" column="MEMBER_NO"/>
+			<result property="path" column="PATH"/>
+			<result property="name" column="NAME"/>
+			<result property="extension" column="EXTENSION"/>
+			<result property="createdDate" column="CREATED_DATE"/>
+			<result property="updatedDate" column="UPDATED_DATE"/>
+	</resultMap>
+
+	<resultMap type="Member" id="memberMap">
+		<result property="no" column="NO"/>
+		<result property="loginID" column="LOGINID"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="message" column="MESSAGE"/>
+		<result property="deleted" column="DELETED"/>
+		<result property="createdDate" column="CREATED_DATE"/>
+		<result property="updatedDate" column="UPDATED_DATE"/>
+		<collection property="memberImage" resultMap="memberImageMap"/>
+	</resultMap>
+	
+	<select id="getLoginMemberVal" resultMap="memberMap" parameterType="String">
+		SELECT M.*, I.*
+		FROM MEMBER M  INNER JOIN MEMBER_IMAGE I ON M.NO = I.MEMBER_NO
+		WHERE LOGINID = #{loginID}
+	</select>
+	
+	<select id="checkMember" resultMap="memberMap" parameterType="String">
+		SELECT M.*, I.*
+		FROM MEMBER M  INNER JOIN MEMBER_IMAGE I ON M.NO = I.MEMBER_NO
+		WHERE LOGINID = #{loginID} AND PASSWORD = #{password}
+	</select>
+	
+	
+	
+
+	<select id="findOne" resultType="Member" parameterType="String">
+		SELECT *
+		FROM MEMBER
+		WHERE LOGINID = #{loginID}
+	</select>
+
+	<select id="duplcheck" resultType="int" parameterType="String">
+		SELECT
+		COUNT(*) FROM MEMBER WHERE LOGINID= #{dupId}
+	</select>
+
+
+	<insert id="insert" parameterType="Member">
+		INSERT INTO MEMBER (
+		NO, LOGINID, PASSWORD, MESSAGE, DELETED,
+		CREATED_DATE, UPDATED_DATE
+		) VALUES(
+		SEQ_MEMBER.NEXTVAL, #{loginID}, #{password}, #{message}, 'N',
+		TO_DATE(SYSDATE,'YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD')
+		)
+	</insert>
+	
+	<insert id="insertImage"  parameterType="MemberImage">
+		INSERT INTO MEMBER_IMAGE (
+		MEMBER_NO, PATH, NAME, EXTENSION,
+		CREATED_DATE, UPDATED_DATE
+		) VALUES(
+		#{memberNo}, #{path}, #{name}, #{extension},
+		TO_DATE(SYSDATE,'YYYY-MM-DD'), TO_DATE(SYSDATE,'YYYY-MM-DD')
+		)
+	</insert>
+	
+	<update id="update" parameterType="Member">
+		UPDATE MEMBER
+      		 SET PASSWORD = #{password},
+       				MESSAGE = #{message},
+       				UPDATED_DATE = TO_DATE(SYSDATE,'YYYY-MM-DD')
+    	 WHERE NO = #{no}
+	</update>
+	<update id="updateImage" parameterType="MemberImage">
+		UPDATE MEMBER_IMAGE
+      		 SET PATH = #{path},
+      				 NAME = #{name},
+      				 EXTENSION = #{extension},
+      				 UPDATED_DATE = TO_DATE(SYSDATE,'YYYY-MM-DD')
+    	 WHERE MEMBER_NO = #{memberNo}
+	</update>
+
+
+</mapper>

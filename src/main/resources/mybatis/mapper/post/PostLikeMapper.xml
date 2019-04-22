@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sys4u.spring.instagram.core.repository.post.PostLikeRepository">
+
+   <update id="mergePostLike" parameterType="Map">
+      MERGE INTO POST_LIKE A
+      USING (SELECT #{postNo} AS POST_NO, #{memberNo} AS MEMBER_NO FROM DUAL) B
+         ON (A.MEMBER_NO = B.MEMBER_NO AND A.POST_NO = B.POST_NO)
+       WHEN MATCHED 
+       THEN UPDATE SET A.NO = A.NO
+            DELETE WHERE POST_NO = #{postNo} AND MEMBER_NO = #{memberNo}
+       WHEN NOT MATCHED
+       THEN INSERT (NO, MEMBER_NO, POST_NO) VALUES (SEQ_LIKE_POST.NEXTVAL, #{memberNo}, #{postNo})
+   </update>
+   <!--
+    MERGE INTO POST_LIKE A
+    USING (SELECT 167 AS MEMBER_NO, 149 AS POST_NO FROM DUAL) B
+       ON (A.MEMBER_NO = B.MEMBER_NO AND A.POST_NO = B.POST_NO)
+	 WHEN MATCHED
+	 THEN UPDATE SET A.NO = A.NO
+	      DELETE WHERE MEMBER_NO = 167 AND POST_NO = 149
+	 WHEN NOT MATCHED
+	 THEN INSERT (NO, MEMBER_NO, POST_NO) VALUES (SEQ_LIKE_POST.NEXTVAL, 167, 149);
+    -->
+    <!-- 
+   MERGE INTO POST_LIKE
+   USING DUAL
+      ON (POST_NO = #{postNo} AND MEMBER_NO = #{memberNo})
+    WHEN MATCHED 
+    THEN UPDATE SET MEMBER_NO = member_no
+         DELETE WHERE POST_NO = #{postNo} AND MEMBER_NO = #{memberNo}
+    WHEN NOT MATCHED
+    THEN INSERT (NO, MEMBER_NO, POST_NO) VALUES (SEQ_LIKE_POST.NEXTVAL, #{memberNo}, #{postNo})
+     -->
+</mapper>

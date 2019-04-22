@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+ .loginVAl {
+        color: white;
+}
+
+
+.bgimg {
+	border: 0;
+	padding: 0;
+	background-image: url(../images/common/background.jpg);
+	min-height: 100%;
+	background-position: center;
+	background-size: cover;
+}
+
+.page {
+	height:650px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.square_btn {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: #af1576;
+    border: solid 2px #af1576;
+    border-radius: 3px;
+    transition: .4s;
+}
+
+.square_btn:hover {
+    background: #af1576;
+    color: white;
+}
+
+.buttonRadius {
+	border-radius: 12px;
+	background-color: #af1576; 
+  border: none;
+  color: white;
+  padding: 7px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+}
+
+
+.custom-file-input {
+  color: transparent;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Select File';
+  color: white;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #db277e, #db277e);
+  border: 1px solid #db277e;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #db277e;
+  font-weight: 500;
+  font-size: 12pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}

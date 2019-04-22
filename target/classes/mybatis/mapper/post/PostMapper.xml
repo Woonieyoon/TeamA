@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sys4u.spring.instagram.core.repository.post.PostRepository">
+	<resultMap id="PostMap" type="kr.sys4u.spring.instagram.core.dto.post.Post">
+		<id property="no" column="NO" jdbcType="DECIMAL"/>
+		<result property="totalCount" column="TOTALCOUNT" jdbcType="DECIMAL"/>
+		<result property="content" column="CONTENT"/>
+		<result property="createdDate" column="CREATED_DATE"/>
+		<association property="postImage" javaType="PostImage">
+			<id property="postNo" column="NO"/>
+		    <result property="path" column="PATH"/>
+		    <result property="name" column="NAME"/>
+		    <result property="extension" column="EXTENSION"/>
+	    </association>
+		<association property="postLike" javaType="PostLike" column="NO">
+			<id property="postNo" column="NO"/>
+		    <result property="totalCount" column="LIKECOUNT"/>
+		    <result property="liked" column="LIKED"/>
+		    <result property="recentLikedUser" column="LIKEMEMBER"/>
+	    </association>
+		<association property="member" javaType="Member" column="MEMBER_NO">
+			<id property="no" column="MEMBER_NO"/>
+		    <result property="loginID" column="LOGINID"/>
+		    <association property="memberImage" javaType="memberImage" column="MEMBER_NO">
+				<id property="memberNo" column="MEMBER_NO"/>
+			    <result property="path" column="MIPATH"/>
+			    <result property="name" column="MINAME"/>
+			    <result property="extension" column="MIEXTENSION"/>
+		    </association>
+	    </association>
+	    <collection property="hashtagList" javaType="java.util.ArrayList" column="NO"
+	    	ofType="String"
+	    	select="kr.sys4u.spring.instagram.core.repository.post.HashtagRepository.selectHashtagByPostNo"/>
+	    <collection property="postReplyList" javaType="java.util.ArrayList" column="NO"
+	    	ofType="postReply"
+	    	select="kr.sys4u.spring.instagram.core.repository.post.PostReplyRepository.selectReply"/>
+    </resultMap>
+    
+	<select id="findSome" parameterType="Map" resultMap="PostMap">
+		SELECT RNUM
+			, TOTALCOUNT
+			, NO
+			, CONTENT
+			, CREATED_DATE
+			, MEMBER_NO
+			, LOGINID
+			, I_POST_NO
+			, PATH
+			, NAME
+			, EXTENSION
+			, LIKED
+			, LIKECOUNT
+			, LIKEMEMBER
+			, MIPATH
+			, MINAME
+			, MIEXTENSION
+		  FROM (SELECT ROWNUM AS RNUM
+		  		, T.* FROM (SELECT (SELECT COUNT(P.NO)
+                           		 FROM POST P, POST_IMAGE I, MEMBER M, MEMBER_IMAGE MI
+                          		WHERE P.NO = I.POST_NO
+	                              AND P.MEMBER_NO = M.NO
+	                              AND P.MEMBER_NO = MI.MEMBER_NO(+)
+	                              AND M.DELETED = 'N'
+          					<if test="hashtag != null">
+	                              AND P.NO IN
+                                 (SELECT POST_NO FROM 
+                                     (SELECT H.POST_NO 
+                                        FROM HASHTAG H 
+                                       WHERE H.NAME = #{hashtag}))
+                			</if> 
+                			) AS TOTALCOUNT
+       						, P.NO AS NO
+       						, P.CONTENT AS CONTENT
+       						, P.CREATED_DATE AS CREATED_DATE
+       						, I.POST_NO AS I_POST_NO
+       						, I.PATH AS PATH
+       						, I.NAME AS NAME
+       						, I.EXTENSION AS EXTENSION
+       						, M.NO AS MEMBER_NO
+       						, M.LOGINID AS LOGINID
+       						, MI.PATH AS MIPATH
+       						, MI.NAME AS MINAME
+       						, MI.EXTENSION AS MIEXTENSION
+       						, NVL((SELECT NO FROM POST_LIKE WHERE POST_NO = P.NO AND MEMBER_NO = #{memberNo}), 0) AS LIKED
+       						, NVL((SELECT COUNT(MEMBER_NO) FROM POST_LIKE WHERE POST_NO = P.NO), 0) AS LIKECOUNT
+       						, (SELECT LOGINID FROM MEMBER WHERE NO = (SELECT MEMBER_NO FROM POST_LIKE WHERE NO = (SELECT MAX(NO) AS MAXNO FROM POST_LIKE WHERE POST_NO = P.NO))) AS LIKEMEMBER
+					   FROM POST P, POST_IMAGE I, MEMBER M, MEMBER_IMAGE MI
+					  WHERE P.NO = I.POST_NO
+          			  AND P.MEMBER_NO = M.NO
+          			  AND P.MEMBER_NO = MI.MEMBER_NO(+)
+          			  AND M.DELETED = 'N'
+          		<if test="hashtag != null">
+                      AND P.NO IN
+                     (SELECT POST_NO FROM 
+                         (SELECT H.POST_NO 
+                            FROM HASHTAG H 
+                           WHERE H.NAME = #{hashtag}))
+                </if>
+          			ORDER BY P.NO DESC) T
+	<![CDATA[
+     			 WHERE ROWNUM < #{row}+3
+     		)
+    	 WHERE RNUM >= #{row}
+	]]>
+	</select>
+	
+	
+	<select id="findOne" parameterType="Map" resultType="Post">
+			SELECT P.NO AS NO
+		        , P.CONTENT AS CONTENT
+		        , P.CREATED_DATE AS CREATED_DATE
+		        , I.POST_NO AS I_POST_NO
+		        , I.PATH AS PATH
+		        , I.NAME AS NAME
+		        , I.EXTENSION AS EXTENSION
+		        , M.NO AS MEMBER_NO
+		        , M.LOGINID AS LOGINID
+		        , MI.PATH AS MIPATH
+		        , MI.NAME AS MINAME
+		        , MI.EXTENSION AS MIEXTENSION
+		        , NVL((SELECT NO FROM POST_LIKE WHERE POST_NO = P.NO AND MEMBER_NO = #{memberNo}),0) AS LIKED
+		        , NVL((SELECT COUNT(MEMBER_NO) FROM POST_LIKE WHERE POST_NO = P.NO), 0) AS LIKECOUNT
+		        , (SELECT MEMBER_NO FROM POST_LIKE WHERE NO = (SELECT MAX(NO) AS MAXNO FROM POST_LIKE WHERE POST_NO = P.NO)) AS LIKEMEMBER
+		     FROM POST P, POST_IMAGE I, MEMBER M, MEMBER_IMAGE MI
+		    WHERE P.NO = #{postNO}
+		      AND P.NO = I.POST_NO
+		  	  AND P.MEMBER_NO = M.NO
+		  	  AND P.MEMBER_NO = MI.MEMBER_NO(+)
+		  	  AND M.DELETED = 'N'
+		 	ORDER BY P.NO DESC
+	</select>
+	
+	<select id="getSequence" resultType="int">
+		SELECT SEQ_POST.CURRVAL FROM DUAL
+	</select>
+	
+	<insert id="insert" parameterType="Post">
+			INSERT INTO POST(NO
+				, MEMBER_NO
+                , CONTENT
+                , CREATED_DATE
+                , UPDATED_DATE
+                , DELETED)
+            VALUES(SEQ_POST.NEXTVAL, #{post.member.no}, #{post.content}, SYSDATE, SYSDATE, 'N')
+	</insert>
+	
+	<select id="confirmMyPost" resultType="Post" parameterType="Map">
+	SELECT P.* FROM POST P   
+		INNER JOIN MEMBER M         
+        ON P.MEMBER_NO = M.NO 
+		WHERE M.LOGINID = #{loginId} AND P.NO = #{postNo}
+	</select>
+	
+</mapper>

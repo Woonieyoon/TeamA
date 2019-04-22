@@ -1,0 +1,282 @@
+@charset "UTF-8";
+
+/*mypage*/
+#content_mypage {
+	width: 100%;
+	padding: 60px 20px 0;
+	height: fit-content;
+}
+
+#mypage_header {
+	margin-bottom: 44px;
+	display: flex;
+}
+
+#mypage_header_profileImage {
+	margin-right: 30px;
+	width: 291px;
+}
+
+#mypage_header_profileImage_image {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	background-size: 150px;
+	background-repeat: no-repeat;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#mypage_header_profileInfo_top {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+#mypage_h1 {
+	color: #262626;
+	font-weight: 300 !important;
+	font-size: 25px;
+	line-height: 32px;
+	margin-right: 20px;
+}
+
+.mypage_button {
+	background-color: transparent;
+	border: 1px solid #dbdbdb;
+	color: #262626;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: 600;
+	padding: 5px 9px;
+}
+
+.glyphicon-cog {
+	font-size: 25px;
+}
+
+#mypage_header_profileInfo_middle {
+	display: flex;
+	margin-bottom: 20px;
+}
+
+.mypage_span {
+	font-size: 16px;
+	margin-right: 40px;
+}
+
+#mypage_header_profileInfo_bottom {
+	display: grid;
+}
+
+#mypage_content {
+	display: grid;
+}
+
+.mypage_content_post {
+	list-style: none;
+	margin-bottom: 20px;
+}
+
+.mypage_content_postImages {
+	position: relative;
+	overflow: hidden;
+	height: 250px;
+}
+
+.mypage_content_postImage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: #595959;
+}
+
+.mypage_content_postImages:hover .overlay {
+	opacity: 0.7;
+}
+
+.mypage_content_postImageText {
+	color: white;
+	font-size: 15px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+/* detailPage */
+#cotent_detail_div {
+	background-color: #fff;
+	border: 1px solid #e6e6e6;
+	border-bottom-right-radius: 3px;
+	border-top-right-radius: 3px;
+	width: 935px;
+	height: 600px;
+	margin-top: 40px;
+}
+
+#detail_image_div {
+	display: inline;
+}
+
+#detail_image {
+	height: 598px;
+	width: 598px;
+}
+
+#detail_content {
+	display: inline;
+	width: 335px;
+	height: 600px;
+	position: absolute;
+}
+
+#detail_memberInfo_section {
+	border-bottom: 1px solid #efefef;
+	height: 72px;
+	width: 335px;
+	padding: 16px;
+	right: 0;
+	padding: 16px;
+}
+
+#detail_content_section {
+	height: 100px;
+	padding: 16px;
+	width: 335px;
+	border-bottom: 1px solid #efefef;
+}
+
+#detail_replyList_section {
+	height: 328px;
+	padding: 16px;
+	width: 335px;
+	border-bottom: 1px solid #efefef;
+}
+
+#detail_likeit_section {
+	height: 50px;
+	width: 335px;
+	padding: 16px;
+	border-bottom: 1px solid #efefef;
+}
+
+#detail_writtingReply_section {
+	height: 50px;
+	width: 335px;
+	padding: 12px;
+}
+
+#detail_memberInfo_profileImage {
+	width: 44px;
+	display: inline;
+}
+
+#memberInfo_image {
+	width: 44px;
+	height: 44px;
+	background-position: center;
+	border-radius: 100%;
+	display: inline-block;
+	background-size: cover;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	background-repeat: no-repeat;
+}
+
+#detail_memberInfo_profileInfo {
+	display: inline-block;
+}
+
+#memberInfo_id {
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+.detail_h3 {
+	font-size: 12px;
+	display: inline-block;
+	font-weight: 200;
+	margin-left: 10px;
+}
+
+.detail_h2 {
+	display: inline-block;
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+.detail_h4 {
+	font-size: 10px;
+	color: #dbdbdb;
+}
+
+#detail_replyList_section {
+	border-bottom: 1px solid #efefef;
+}
+
+#reply_image {
+	width: 35px;
+	height: 35px;
+	background-position: center;
+	border-radius: 100%;
+	display: inline-block;
+	background-size: cover;
+	border: 3px solid #dbdbdb;
+	background-repeat: no-repeat;
+}
+
+#detail_reply_userImage {
+	display: inline;
+}
+
+#detail_reply_userId {
+	display: inline;
+}
+
+#detail_reply_comment {
+	display: inline;
+}
+
+#detail_reply_date {
+	padding-left: 50px;
+	color: #dbdbdb;
+}
+
+#detail_reply_userId #detail_reply_content {
+	display: inline-block;
+}
+
+#detail_writtingReply_input {
+	width: 274px;
+	vertical-align: text-top;
+	border: none;
+	color: black;
+	height: 18px;
+	display: inline;
+	font-weight: 400;
+	font-size: 14px;
+}
+
+#detail_writtingReply_btn {
+	color: #3897f0;
+	opacity: .3;
+	font-weight: 600;
+	display: inline;
+	cursor: pointer;
+}

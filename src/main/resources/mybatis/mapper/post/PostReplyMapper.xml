@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.sys4u.spring.instagram.core.repository.post.PostReplyRepository">
+	<select id="selectReply" resultType="PostReply">
+	<![CDATA[
+		SELECT RNUM
+				, NO
+	  			, POST_NO
+	  			, MEMBER_NO
+	  			, USERID
+	  			, CONTENT
+	  			, DELETED
+	  			, CREATED_DATE
+	  			, UPDATED_DATE
+	  	 FROM (SELECT ROWNUM AS RNUM
+					, NO
+		  			, POST_NO
+		  			, MEMBER_NO
+		  			, (SELECT LOGINID FROM MEMBER WHERE NO = MEMBER_NO) AS USERID
+		  			, CONTENT
+		  			, DELETED
+		  			, CREATED_DATE
+		  			, UPDATED_DATE
+	  		 	FROM POST_REPLY
+	  		 WHERE POST_NO = #{no})
+	  	 WHERE RNUM < 4
+	]]>
+	</select>
+	 
+  	<!-- 더보기 가능한 쿼리 -->
+</mapper>
